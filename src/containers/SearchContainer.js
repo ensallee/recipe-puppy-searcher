@@ -1,7 +1,8 @@
-import React, { Fragment, Component } from 'react'
-import SearchBar from '../components/SearchBar'
-import RecipeContainer from './RecipeContainer'
-import Adapter from '../components/Adapter'
+import React, { Fragment, Component } from 'react';
+import SearchBar from '../components/SearchBar';
+import RecipeContainer from './RecipeContainer';
+import FavoritesContainer from './FavoritesContainer';
+import Adapter from '../components/Adapter';
 import  { debounce } from 'lodash';
 
 class SearchContainer extends Component {
@@ -12,7 +13,8 @@ class SearchContainer extends Component {
       searchTerm: '',
       // typing: false,
       // typingTimeout: null,
-      recipeList: []
+      recipeList: [],
+      favoriteRecipes: []
     }
   }
 
@@ -41,7 +43,7 @@ class SearchContainer extends Component {
   raiseFetchRecipesWhenUserStopsTyping = debounce(
     () => {
       this.fetchRecipes(this.state.searchTerm);
-    }, 400);
+    }, 300);
 
   fetchRecipes(term) {
     if (term === '') {
@@ -56,14 +58,24 @@ class SearchContainer extends Component {
     }
   }
 
+  addFavorite = (recipe) => {
+    this.setState({
+      favoriteRecipes: [...this.state.favoriteRecipes, recipe]
+    })
+  }
+
   render() {
     return (
       <Fragment>
         <SearchBar searchTerm={this.state.searchTerm} recipeList={this.state.recipeList} handleChange={this.handleChange} />
-        <RecipeContainer recipeList={this.state.recipeList}/>
+        <div className="all-recipes">
+          <RecipeContainer addFavorite={this.addFavorite} recipeList={this.state.recipeList}/>
+        </div>
       </Fragment>
     )
   }
 }
+
+        // <FavoritesContainer favoriteRecipes={this.state.favoriteRecipes} />
 
 export default SearchContainer
