@@ -1,12 +1,12 @@
 import React, { Component, Fragment } from 'react';
-import SearchContainer from './containers/SearchContainer'
+import MainContainer from './containers/MainContainer';
 import './App.css';
 
 class App extends Component {
   render() {
     return (
       <Fragment>
-        <SearchContainer />
+        <MainContainer />
       </Fragment>
     );
   }
