@@ -5,34 +5,16 @@ import FavoritesContainer from './FavoritesContainer';
 import Adapter from '../components/Adapter';
 import  { debounce } from 'lodash';
 
-class SearchContainer extends Component {
+class MainContainer extends Component {
   constructor(props) {
     super(props)
 
     this.state={
       searchTerm: '',
-      // typing: false,
-      // typingTimeout: null,
       recipeList: [],
       favoriteRecipes: []
     }
   }
-
-  // handleChange = (event) => {
-  //   // if (this.state.typingTimeOut) {
-  //   //   clearTimeout(this.state.typingTimeOut);
-  //   //   console.log('state after clearing timeout', this.state.typingTimeOut)
-  //   // }
-  //   clearTimeout(this.state.typingTimeout)
-  //
-  //   this.setState({
-  //      searchTerm: event.target.value,
-  //      typing: true,
-  //      typingTimeout: setTimeout(() => {
-  //          this.fetchRecipes(this.state.searchTerm);
-  //        }, 3000)
-  //   }, () => console.log('state after typing', this.state));
-  // }
 
   handleChange = (event) => {
     this.setState({
@@ -54,7 +36,7 @@ class SearchContainer extends Component {
       Adapter.fetchRecipes(term)
       .then(data => this.setState({
         recipeList: data.results
-      }, () => console.log('state after search', this.state.recipeList)))
+      }))
     }
   }
 
@@ -64,18 +46,26 @@ class SearchContainer extends Component {
     })
   }
 
+  removeFavorite = (recipe) => {
+    let filteredRecipes = this.state.favoriteRecipes.filter(r => {
+      return r !== recipe
+    })
+    this.setState({
+      favoriteRecipes: filteredRecipes
+    })
+  }
+
   render() {
     return (
       <Fragment>
         <SearchBar searchTerm={this.state.searchTerm} recipeList={this.state.recipeList} handleChange={this.handleChange} />
         <div className="all-recipes">
-          <RecipeContainer addFavorite={this.addFavorite} recipeList={this.state.recipeList}/>
+          <RecipeContainer favoriteRecipes={this.state.favoriteRecipes} addFavorite={this.addFavorite} removeFavorite={this.removeFavorite} recipeList={this.state.recipeList}/>
+          <FavoritesContainer favoriteRecipes={this.state.favoriteRecipes} removeFavorite={this.removeFavorite} />
         </div>
       </Fragment>
     )
   }
 }
 
-        // <FavoritesContainer favoriteRecipes={this.state.favoriteRecipes} />
-
-export default SearchContainer
+export default MainContainer
