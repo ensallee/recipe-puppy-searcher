@@ -4,6 +4,8 @@
 
 .recipe {
   border: 1px solid black;
+  padding: 1rem;
+  text-align: center;
 }
 
 .all-recipes {
@@ -25,4 +27,14 @@
 .search input {
   display: block;
   margin: 0 auto;
+}
+
+.placeholder {
+  height: 75px;
+}
+
+#title {
+  text-align: center;
+  font-family: 'Questrial', sans-serif;
+  font-size: 50px;
 }

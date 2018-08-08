@@ -3,7 +3,7 @@ import SearchBar from '../components/SearchBar';
 import RecipeContainer from './RecipeContainer';
 import FavoritesContainer from './FavoritesContainer';
 import Adapter from '../components/Adapter';
-import  { debounce } from 'lodash';
+import { debounce } from 'lodash';
 
 class MainContainer extends Component {
   constructor(props) {
@@ -47,9 +47,7 @@ class MainContainer extends Component {
   }
 
   removeFavorite = (recipe) => {
-    let filteredRecipes = this.state.favoriteRecipes.filter(r => {
-      return r !== recipe
-    })
+    let filteredRecipes = this.state.favoriteRecipes.filter(r => r !== recipe)
     this.setState({
       favoriteRecipes: filteredRecipes
     })
@@ -58,6 +56,8 @@ class MainContainer extends Component {
   render() {
     return (
       <Fragment>
+        <h1 id="title">Hungry Puppy</h1>
+        <h5 className="center">Powered by Recipe Puppy</h5>
         <SearchBar searchTerm={this.state.searchTerm} recipeList={this.state.recipeList} handleChange={this.handleChange} />
         <div className="all-recipes">
           <RecipeContainer favoriteRecipes={this.state.favoriteRecipes} addFavorite={this.addFavorite} removeFavorite={this.removeFavorite} recipeList={this.state.recipeList}/>
